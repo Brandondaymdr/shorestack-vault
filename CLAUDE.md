@@ -189,7 +189,21 @@ shorestack-vault/
 ├── middleware.ts                       ← Auth route protection
 ├── .env.local                          ← Environment variables (gitignored)
 ├── .env.example
-└── CLAUDE.md                           ← this file
+├── docs/
+│   └── PHASE-14-15-BUILD-PLAN.md      ← Extension + PWA architecture & build plan
+├── CLAUDE.md                           ← this file
+└── extension/                          ← (Phase 14) Browser extension — separate Vite project
+    ├── src/
+    │   ├── background/service-worker.ts
+    │   ├── content/content-script.ts
+    │   ├── content/form-detector.ts
+    │   ├── content/autofill.ts
+    │   ├── popup/App.tsx
+    │   ├── popup/pages/
+    │   └── shared/crypto.ts            ← Copy of lib/crypto.ts for extension bundle
+    ├── public/manifest.json            ← Manifest V3
+    ├── vite.config.ts
+    └── package.json
 ```
 
 ---
@@ -249,8 +263,10 @@ NEXT_PUBLIC_APP_URL=https://password-mu.vercel.app
 - [x] Phase 11: Stripe subscription + plan enforcement
 - [x] Phase 12: Settings (change master password, export vault, delete account)
 - [x] Phase 13: Shorestack branding + landing page
-- [ ] Phase 14: Browser extension (v2)
-- [ ] Phase 15: PWA + biometric unlock (v2)
+- [ ] Phase 14: Browser extension (Chrome + Firefox, Manifest V3)
+- [ ] Phase 15: PWA + biometric unlock (WebAuthn, IndexedDB offline cache)
+
+> **Build plan:** See `docs/PHASE-14-15-BUILD-PLAN.md` for full architecture, file lists, and build order.
 
 ---
 
@@ -265,11 +281,60 @@ NEXT_PUBLIC_APP_URL=https://password-mu.vercel.app
 
 ---
 
+## Phase 14: Browser Extension Architecture
+
+**Stack:** Vite + React 19 + Tailwind + CRXJS, Manifest V3 (Chrome + Firefox)
+**Location:** `extension/` directory (separate project with its own `package.json`)
+
+**Key architecture decisions:**
+- Extension has its own vault session in service worker memory (independent from web app)
+- User authenticates with Supabase in popup, enters master password to derive vault key
+- `shared/crypto.ts` is a copy of `lib/crypto.ts` — same encryption, bundled separately
+- Content scripts detect login forms via `<input type="password">` + MutationObserver
+- Autofill requires explicit user click in popup (never automatic)
+- MV3 service workers can terminate; vault key is lost → user re-enters master password
+- Supabase session token stored in `chrome.storage.session` (cleared on browser close)
+
+**Extension message protocol:**
+- `FORM_DETECTED` — Content script → Service worker (login form found on page)
+- `GET_CREDENTIALS` — Popup → Service worker (request matching items for current URL)
+- `AUTOFILL` — Popup → Content script (fill form with decrypted credentials)
+- `SAVE_OFFER` — Content script → Service worker (form submitted, offer to save)
+- `UNLOCK` / `LOCK` / `GET_STATUS` — Popup ↔ Service worker (session management)
+
+---
+
+## Phase 15: PWA + Biometric Architecture
+
+**PWA Stack:** @serwist/next (service worker), IndexedDB (offline cache)
+**Biometric Stack:** WebAuthn API (platform authenticators: Touch ID, Face ID, Windows Hello)
+
+**Key architecture decisions:**
+- PWA manifest via Next.js `app/manifest.ts` (generates `/manifest.webmanifest`)
+- Service worker caching: cache-first for assets, network-first for API calls
+- IndexedDB stores encrypted ciphertext only (same blobs as Supabase, never plaintext)
+- Biometric unlock uses WebAuthn with `authenticatorAttachment: 'platform'`
+- Vault key wrapping: on enrollment, re-derive vault key as extractable, encrypt raw bytes with a random wrap key, encrypt wrap key with vault key, store both encrypted blobs in `profiles`
+- On biometric unlock: WebAuthn verifies user → decrypt wrap key → decrypt vault key → import as non-extractable CryptoKey
+- Master password always available as fallback
+
+**New database columns (profiles table):**
+- `webauthn_credential_id TEXT` — Base64 credential ID
+- `webauthn_public_key TEXT` — JSON-encoded public key (JWK)
+- `webauthn_transports TEXT[]` — Transport hints
+- `biometric_vault_key_encrypted TEXT` — Vault key encrypted with wrap key
+- `biometric_vault_key_iv TEXT` — IV for the above
+
+---
+
 ## Notes for Claude
 
 - Always use `lib/crypto.ts` functions for any encryption/decryption — never inline crypto logic
+- For the extension, copy `lib/crypto.ts` to `extension/src/shared/crypto.ts` — keep in sync manually
 - Never log decrypted data to console in production builds
 - The vault key (`CryptoKey`) should only exist in `VaultSession` — never in React state, localStorage, or cookies
+- IndexedDB may only store encrypted ciphertext — never plaintext vault data
+- WebAuthn enrollment must use `userVerification: 'required'` — never 'discouraged'
 - Supabase RLS handles multi-tenancy — always confirm policies are active before storing data
 - TypeScript strict mode is on — no `any` types in crypto or vault modules
 - Follow Shorestack brand guidelines: Deep Ocean (#1b4965), Seafoam (#5fa8a0), Sand (#fcfbf8), Inter font, sharp corners, no shadows
