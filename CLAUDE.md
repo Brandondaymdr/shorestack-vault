@@ -34,8 +34,9 @@
 | Borders | 1px solid Deep Ocean at 10–20% opacity |
 | Primary Buttons | Solid Seafoam fill, sharp corners |
 | Secondary Buttons | Deep Ocean outline, no fill |
-| Logo | Wave grid mark (sinusoidal, 11 lines) + "shorestack" wordmark |
-| Sub-brand | "shorestack vault" — wave mark color matches Seafoam accent |
+| Logo | Wave grid mark (sinusoidal, 11 lines) + "SHORESTACK" wordmark (uppercase, bold) |
+| Sub-brand | "SHORESTACK VAULT" — single line, uppercase, matches shorestack.io/books format |
+| Logo Component | `components/ui/ShorestackLogo.tsx` — SVG wave mark + text, supports horizontal/stacked/mark variants |
 
 ---
 
@@ -162,16 +163,18 @@ shorestack-vault/
 │   │   │   └── portal/route.ts         ← Stripe Customer Portal redirect
 │   │   └── audit/route.ts
 │   ├── auth/callback/route.ts          ← Supabase email confirmation handler
-│   ├── layout.tsx
-│   └── globals.css
+│   ├── page.tsx                          ← Landing page (hero, features, pricing, footer)
+│   ├── layout.tsx                        ← Root layout (Inter + JetBrains Mono, Sand bg)
+│   └── globals.css                       ← Brand theme (CSS vars, utility classes)
 ├── components/
-│   ├── vault/
-│   │   ├── AddItemModal.tsx
-│   │   ├── VaultItemDetail.tsx
-│   │   ├── PasswordGenerator.tsx
-│   │   ├── DocumentUpload.tsx
-│   │   └── PricingCards.tsx
-│   └── ui/
+│   ├── ui/
+│   │   └── ShorestackLogo.tsx            ← SVG wave mark + wordmark (horizontal/stacked/mark)
+│   └── vault/
+│       ├── AddItemModal.tsx
+│       ├── VaultItemDetail.tsx
+│       ├── PasswordGenerator.tsx
+│       ├── DocumentUpload.tsx
+│       └── PricingCards.tsx
 ├── lib/
 │   ├── crypto.ts                       ← ALL encryption logic (AES-256-GCM, PBKDF2, HMAC)
 │   ├── supabase.ts                     ← Browser Supabase client
@@ -244,7 +247,7 @@ NEXT_PUBLIC_APP_URL=https://password-mu.vercel.app
 - [x] Phase 10: Audit log viewer
 - [x] Phase 11: Stripe subscription + plan enforcement
 - [x] Phase 12: Settings (change master password, export vault, delete account)
-- [ ] Phase 13: Shorestack branding + landing page
+- [x] Phase 13: Shorestack branding + landing page
 - [ ] Phase 14: Browser extension (v2)
 - [ ] Phase 15: PWA + biometric unlock (v2)
 
