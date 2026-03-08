@@ -36,7 +36,7 @@ export default function SignupPage() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/setup`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/setup`,
         },
       });
 
