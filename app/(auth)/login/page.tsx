@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import ShorestackLogo from '@/components/ui/ShorestackLogo';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -68,29 +69,26 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center px-4 bg-sand">
       <div className="w-full max-w-md space-y-8">
         {/* Logo / Title */}
-        <div className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600">
-            <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-            </svg>
+        <div className="text-center space-y-2">
+          <div className="flex justify-center">
+            <ShorestackLogo variant="horizontal" subbrand="vault" size="md" />
           </div>
-          <h1 className="text-2xl font-bold">ShoreStack Vault</h1>
-          <p className="mt-2 text-sm text-gray-400">Sign in to your account</p>
+          <p className="text-sm text-[#1b4965]/60">Your passwords, locked down.</p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleLogin} className="space-y-4">
           {error && (
-            <div className="rounded-lg border border-red-800 bg-red-900/30 px-4 py-3 text-sm text-red-300">
+            <div className="rounded-sm border border-[#e76f51]/30 bg-[#e76f51]/10 px-4 py-3 text-sm text-[#e76f51]">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+            <label htmlFor="email" className="block text-sm font-medium text-[#1b4965]">
               Email
             </label>
             <input
@@ -99,13 +97,13 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="mt-1 block w-full rounded-sm border border-[#1b4965]/15 bg-white px-4 py-3 text-[#1b4965] placeholder-[#1b4965]/40 focus:border-[#5fa8a0] focus:outline-none focus:ring-1 focus:ring-[#5fa8a0]"
               placeholder="you@example.com"
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+            <label htmlFor="password" className="block text-sm font-medium text-[#1b4965]">
               Password
             </label>
             <input
@@ -114,7 +112,7 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="mt-1 block w-full rounded-sm border border-[#1b4965]/15 bg-white px-4 py-3 text-[#1b4965] placeholder-[#1b4965]/40 focus:border-[#5fa8a0] focus:outline-none focus:ring-1 focus:ring-[#5fa8a0]"
               placeholder="••••••••"
             />
           </div>
@@ -122,7 +120,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-emerald-600 px-4 py-3 font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-sm bg-[#5fa8a0] px-4 py-3 font-medium text-white transition-colors hover:bg-[#4d8f87] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
@@ -131,15 +129,15 @@ export default function LoginPage() {
             type="button"
             onClick={handleMagicLink}
             disabled={loading}
-            className="w-full rounded-lg border border-gray-700 px-4 py-3 font-medium text-gray-300 transition-colors hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-sm border border-[#1b4965]/15 px-4 py-3 font-medium text-[#1b4965] transition-colors hover:bg-[#1b4965]/5 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Send Magic Link
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-400">
+        <p className="text-center text-sm text-[#1b4965]/60">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" className="text-emerald-400 hover:text-emerald-300">
+          <Link href="/signup" className="text-[#5fa8a0] hover:text-[#4d8f87]">
             Create one
           </Link>
         </p>

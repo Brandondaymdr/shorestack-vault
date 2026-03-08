@@ -11,19 +11,19 @@ import type { Profile, VaultItemRow, VaultItemType, DecryptedVaultItem, Decrypte
 
 const TYPE_META: Record<VaultItemType, { label: string; pluralLabel: string; color: string; icon: React.ReactNode }> = {
   login: {
-    label: 'Login', pluralLabel: 'Logins', color: 'text-blue-400',
+    label: 'Login', pluralLabel: 'Logins', color: 'text-[#5fa8a0]',
     icon: <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />,
   },
   secure_note: {
-    label: 'Note', pluralLabel: 'Notes', color: 'text-yellow-400',
+    label: 'Note', pluralLabel: 'Notes', color: 'text-[#d97706]',
     icon: <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />,
   },
   credit_card: {
-    label: 'Card', pluralLabel: 'Cards', color: 'text-purple-400',
+    label: 'Card', pluralLabel: 'Cards', color: 'text-[#8b5cf6]',
     icon: <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />,
   },
   identity: {
-    label: 'Identity', pluralLabel: 'Identities', color: 'text-emerald-400',
+    label: 'Identity', pluralLabel: 'Identities', color: 'text-[#5fa8a0]',
     icon: <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />,
   },
 };
@@ -159,81 +159,81 @@ export default function DashboardPage() {
   // --- Master Password Prompt ---
   if (needsMasterPassword) {
     return (
-      <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="flex min-h-screen items-center justify-center px-4 bg-sand">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center">
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-800">
-              <svg className="h-8 w-8 text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-sm bg-[#1b4965]">
+              <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
               </svg>
             </div>
-            <h1 className="text-xl font-bold">Vault Locked</h1>
-            <p className="mt-1 text-sm text-gray-400">Enter your master password to unlock</p>
-            {profile?.hint && <p className="mt-2 text-xs text-gray-500">Hint: {profile.hint}</p>}
+            <h1 className="text-xl font-bold text-[#1b4965]">Vault Locked</h1>
+            <p className="mt-1 text-sm text-[#1b4965]/60">Enter your master password to unlock</p>
+            {profile?.hint && <p className="mt-2 text-xs text-[#1b4965]/60">Hint: {profile.hint}</p>}
           </div>
           <form onSubmit={handleUnlock} className="space-y-4">
-            {error && <div className="rounded-lg border border-red-800 bg-red-900/30 px-4 py-3 text-sm text-red-300">{error}</div>}
-            <input type="password" value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} className="block w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" placeholder="Master password" autoFocus />
-            <button type="submit" disabled={unlocking} className="w-full rounded-lg bg-emerald-600 px-4 py-3 font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-50">{unlocking ? 'Unlocking...' : 'Unlock Vault'}</button>
+            {error && <div className="rounded-sm border border-[#e76f51]/30 bg-[#e76f51]/10 px-4 py-3 text-sm text-[#e76f51]">{error}</div>}
+            <input type="password" value={masterPassword} onChange={(e) => setMasterPassword(e.target.value)} className="block w-full rounded-sm border border-[#1b4965]/15 bg-white px-4 py-3 text-[#1b4965] placeholder-[#1b4965]/40 focus:border-[#5fa8a0] focus:outline-none focus:ring-1 focus:ring-[#5fa8a0]" placeholder="Master password" autoFocus />
+            <button type="submit" disabled={unlocking} className="w-full rounded-sm bg-[#5fa8a0] px-4 py-3 font-medium text-white transition-colors hover:bg-[#4d8f87] disabled:opacity-50">{unlocking ? 'Unlocking...' : 'Unlock Vault'}</button>
           </form>
-          <button onClick={handleSignOut} className="w-full text-center text-sm text-gray-500 hover:text-gray-300">Sign out</button>
+          <button onClick={handleSignOut} className="w-full text-center text-sm text-[#1b4965]/60 hover:text-[#1b4965]">Sign out</button>
         </div>
       </div>
     );
   }
 
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center"><div className="animate-pulse text-gray-400">Loading vault...</div></div>;
+    return <div className="flex min-h-screen items-center justify-center bg-sand"><div className="animate-pulse text-[#1b4965]/60">Loading vault...</div></div>;
   }
 
   // --- Main Dashboard ---
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-sand">
       {/* Sidebar */}
-      <aside className="hidden w-64 shrink-0 border-r border-gray-800 bg-gray-900/50 md:block">
-        <div className="flex items-center gap-3 border-b border-gray-800 px-5 py-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600">
+      <aside className="hidden w-64 shrink-0 border-r border-[#1b4965]/15 bg-[#1b4965] md:block">
+        <div className="flex items-center gap-3 border-b border-[#fcfbf8]/10 px-5 py-4">
+          <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-[#5fa8a0]">
             <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
             </svg>
           </div>
-          <span className="font-semibold">ShoreStack Vault</span>
+          <span className="font-semibold text-white">ShoreStack Vault</span>
         </div>
 
         <nav className="p-3 space-y-1">
-          <button onClick={() => setFilterType('all')} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${filterType === 'all' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-200'}`}>
+          <button onClick={() => setFilterType('all')} className={`flex w-full items-center gap-3 rounded-sm px-3 py-2 text-sm transition-colors ${filterType === 'all' ? 'bg-[#5fa8a0] text-white' : 'text-[#fcfbf8]/70 hover:bg-[#1b4965]/50 hover:text-white'}`}>
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" /></svg>
             All Items
-            <span className="ml-auto text-xs text-gray-600">{items.length}</span>
+            <span className="ml-auto text-xs text-[#fcfbf8]/50">{items.length}</span>
           </button>
-          <button onClick={() => setFilterType('favorites')} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${filterType === 'favorites' ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-200'}`}>
+          <button onClick={() => setFilterType('favorites')} className={`flex w-full items-center gap-3 rounded-sm px-3 py-2 text-sm transition-colors ${filterType === 'favorites' ? 'bg-[#5fa8a0] text-white' : 'text-[#fcfbf8]/70 hover:bg-[#1b4965]/50 hover:text-white'}`}>
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" /></svg>
             Favorites
-            <span className="ml-auto text-xs text-gray-600">{items.filter(i => i.favorite).length}</span>
+            <span className="ml-auto text-xs text-[#fcfbf8]/50">{items.filter(i => i.favorite).length}</span>
           </button>
 
-          <div className="pb-1 pt-4 px-3 text-xs font-medium uppercase tracking-wider text-gray-600">Categories</div>
+          <div className="pb-1 pt-4 px-3 text-xs font-medium uppercase tracking-wider text-[#fcfbf8]/50">Categories</div>
 
           {(Object.keys(TYPE_META) as VaultItemType[]).map((type) => {
             const meta = TYPE_META[type];
             const count = items.filter(i => i.item_type === type).length;
             return (
-              <button key={type} onClick={() => setFilterType(type)} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors ${filterType === type ? 'bg-gray-800 text-white' : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-200'}`}>
+              <button key={type} onClick={() => setFilterType(type)} className={`flex w-full items-center gap-3 rounded-sm px-3 py-2 text-sm transition-colors ${filterType === type ? 'bg-[#5fa8a0] text-white' : 'text-[#fcfbf8]/70 hover:bg-[#1b4965]/50 hover:text-white'}`}>
                 <svg className={`h-4 w-4 ${meta.color}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">{meta.icon}</svg>
                 {meta.pluralLabel}
-                <span className="ml-auto text-xs text-gray-600">{count}</span>
+                <span className="ml-auto text-xs text-[#fcfbf8]/50">{count}</span>
               </button>
             );
           })}
         </nav>
 
         {/* Bottom actions */}
-        <div className="absolute bottom-0 left-0 w-64 border-t border-gray-800 p-3 space-y-1">
-          <button onClick={handleLock} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-400 hover:bg-gray-800/50 hover:text-gray-200">
+        <div className="absolute bottom-0 left-0 w-64 border-t border-[#fcfbf8]/10 p-3 space-y-1">
+          <button onClick={handleLock} className="flex w-full items-center gap-3 rounded-sm px-3 py-2 text-sm text-[#fcfbf8]/70 hover:bg-[#1b4965]/50 hover:text-white">
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
             Lock Vault
           </button>
-          <button onClick={handleSignOut} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-gray-400 hover:bg-gray-800/50 hover:text-gray-200">
+          <button onClick={handleSignOut} className="flex w-full items-center gap-3 rounded-sm px-3 py-2 text-sm text-[#fcfbf8]/70 hover:bg-[#1b4965]/50 hover:text-white">
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" /></svg>
             Sign Out
           </button>
@@ -243,11 +243,11 @@ export default function DashboardPage() {
       {/* Main content */}
       <main className="flex-1">
         {/* Top bar */}
-        <header className="sticky top-0 z-10 border-b border-gray-800 bg-gray-950/80 backdrop-blur">
+        <header className="sticky top-0 z-10 border-b border-[#1b4965]/15 bg-white/80 backdrop-blur">
           <div className="flex items-center gap-4 px-6 py-3">
             {/* Mobile menu button */}
             <div className="flex items-center gap-2 md:hidden">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600">
+              <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-[#1b4965]">
                 <svg className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                 </svg>
@@ -256,14 +256,14 @@ export default function DashboardPage() {
 
             {/* Search */}
             <div className="relative flex-1">
-              <svg className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <svg className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#1b4965]/60" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-lg border border-gray-800 bg-gray-900 py-2 pl-10 pr-4 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+                className="w-full rounded-sm border border-[#1b4965]/15 bg-white py-2 pl-10 pr-4 text-sm text-[#1b4965] placeholder-[#1b4965]/40 focus:border-[#5fa8a0] focus:outline-none"
                 placeholder="Search vault..."
               />
             </div>
@@ -271,7 +271,7 @@ export default function DashboardPage() {
             {/* Add button */}
             <button
               onClick={() => { setEditItem(null); setShowAddModal(true); }}
-              className="flex shrink-0 items-center gap-2 rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-emerald-700"
+              className="flex shrink-0 items-center gap-2 rounded-sm bg-[#5fa8a0] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#4d8f87]"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -281,13 +281,13 @@ export default function DashboardPage() {
 
             {/* Mobile lock/signout */}
             <div className="flex items-center gap-1 md:hidden">
-              <button onClick={handleLock} className="rounded-lg p-2 text-gray-400 hover:bg-gray-800">
+              <button onClick={handleLock} className="rounded-sm p-2 text-[#1b4965]/60 hover:bg-[#1b4965]/10">
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" /></svg>
               </button>
             </div>
 
             {/* Plan badge */}
-            <span className="hidden rounded-full bg-emerald-900/50 px-2.5 py-0.5 text-xs font-medium text-emerald-400 sm:inline">
+            <span className="hidden rounded-full bg-[#5fa8a0]/10 px-2.5 py-0.5 text-xs font-medium text-[#5fa8a0] sm:inline">
               {profile?.plan || 'individual'}
             </span>
           </div>
@@ -300,7 +300,7 @@ export default function DashboardPage() {
                 <button
                   key={type}
                   onClick={() => setFilterType(type)}
-                  className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition-colors ${filterType === type ? 'bg-emerald-600 text-white' : 'bg-gray-800 text-gray-400'}`}
+                  className={`shrink-0 rounded-full px-3 py-1 text-xs font-medium transition-colors ${filterType === type ? 'bg-[#5fa8a0] text-white' : 'bg-white border border-[#1b4965]/15 text-[#1b4965]/60'}`}
                 >
                   {label}
                 </button>
@@ -313,21 +313,21 @@ export default function DashboardPage() {
         <div className="p-6">
           {filteredItems.length === 0 ? (
             <div className="py-16 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gray-800">
-                <svg className="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-sm bg-[#1b4965]/10">
+                <svg className="h-8 w-8 text-[#1b4965]/40" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
               </div>
-              <h2 className="text-lg font-medium text-gray-300">
+              <h2 className="text-lg font-medium text-[#1b4965]">
                 {search ? 'No results found' : items.length === 0 ? 'Your vault is empty' : 'No items in this category'}
               </h2>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-sm text-[#1b4965]/60">
                 {items.length === 0 ? 'Click "Add Item" to store your first password.' : search ? 'Try a different search term.' : ''}
               </p>
               {items.length === 0 && (
                 <button
                   onClick={() => { setEditItem(null); setShowAddModal(true); }}
-                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700"
+                  className="mt-4 inline-flex items-center gap-2 rounded-sm bg-[#5fa8a0] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#4d8f87]"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                   Add Your First Item
@@ -345,21 +345,21 @@ export default function DashboardPage() {
                   <button
                     key={item.id}
                     onClick={() => setSelectedItem(item)}
-                    className="flex w-full items-center gap-3 rounded-xl border border-gray-800 bg-gray-900 p-4 text-left transition-colors hover:border-gray-700 hover:bg-gray-800/50"
+                    className="flex w-full items-center gap-3 rounded-sm border border-[#1b4965]/15 bg-white p-4 text-left transition-colors hover:border-[#1b4965]/25 hover:bg-[#1b4965]/5"
                   >
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-800`}>
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-sm bg-[#1b4965]/10`}>
                       <svg className={`h-5 w-5 ${meta.color}`} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">{meta.icon}</svg>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium text-white">{name}</p>
-                      <p className="truncate text-sm text-gray-500">{subtitle}</p>
+                      <p className="truncate font-medium text-[#1b4965]">{name}</p>
+                      <p className="truncate text-sm text-[#1b4965]/60">{subtitle}</p>
                     </div>
                     {item.favorite && (
-                      <svg className="h-4 w-4 shrink-0 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-4 w-4 shrink-0 text-[#d97706]" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                       </svg>
                     )}
-                    <svg className="h-4 w-4 shrink-0 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <svg className="h-4 w-4 shrink-0 text-[#1b4965]/40" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                     </svg>
                   </button>

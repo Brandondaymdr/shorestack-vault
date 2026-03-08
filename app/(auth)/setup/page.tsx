@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase';
 import { deriveVaultKey } from '@/lib/crypto';
 import { VaultSession } from '@/lib/vault-session';
 import { useRouter } from 'next/navigation';
+import ShorestackLogo from '@/components/ui/ShorestackLogo';
 
 export default function SetupPage() {
   const [masterPassword, setMasterPassword] = useState('');
@@ -33,7 +34,7 @@ export default function SetupPage() {
   }
 
   const strengthLabels = ['', 'Very Weak', 'Weak', 'Fair', 'Strong', 'Very Strong'];
-  const strengthColors = ['', 'bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-emerald-400', 'bg-emerald-500'];
+  const strengthColors = ['', 'bg-[#e76f51]', 'bg-[#d97706]', 'bg-[#f59e0b]', 'bg-[#16a34a]', 'bg-[#16a34a]'];
 
   async function handleSetup(e: React.FormEvent) {
     e.preventDefault();
@@ -100,30 +101,28 @@ export default function SetupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4">
+    <div className="flex min-h-screen items-center justify-center px-4 bg-sand">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-600">
-            <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
-            </svg>
+          <div className="flex justify-center mb-4">
+            <ShorestackLogo variant="horizontal" subbrand="vault" size="md" />
           </div>
-          <h1 className="text-2xl font-bold">Create Master Password</h1>
-          <p className="mt-2 text-sm text-gray-400">
-            This password encrypts your vault. It is <strong className="text-gray-200">never stored anywhere</strong> —
+          <h1 className="text-2xl font-bold text-[#1b4965]">Create Master Password</h1>
+          <p className="mt-2 text-sm text-[#1b4965]/60">
+            This password encrypts your vault. It is <strong className="text-[#1b4965]/80">never stored anywhere</strong> —
             if you forget it, your data cannot be recovered.
           </p>
         </div>
 
         <form onSubmit={handleSetup} className="space-y-4">
           {error && (
-            <div className="rounded-lg border border-red-800 bg-red-900/30 px-4 py-3 text-sm text-red-300">
+            <div className="rounded-sm border border-[#e76f51]/30 bg-[#e76f51]/10 px-4 py-3 text-sm text-[#e76f51]">
               {error}
             </div>
           )}
 
           <div>
-            <label htmlFor="masterPassword" className="block text-sm font-medium text-gray-300">
+            <label htmlFor="masterPassword" className="block text-sm font-medium text-[#1b4965]">
               Master Password
             </label>
             <input
@@ -132,7 +131,7 @@ export default function SetupPage() {
               required
               value={masterPassword}
               onChange={(e) => handleMasterChange(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="mt-1 block w-full rounded-sm border border-[#1b4965]/15 bg-white px-4 py-3 text-[#1b4965] placeholder-[#1b4965]/40 focus:border-[#5fa8a0] focus:outline-none focus:ring-1 focus:ring-[#5fa8a0]"
               placeholder="Min 10 characters — make it strong!"
             />
             {/* Strength meter */}
@@ -143,18 +142,18 @@ export default function SetupPage() {
                     <div
                       key={level}
                       className={`h-1.5 flex-1 rounded-full transition-colors ${
-                        level <= strength ? strengthColors[strength] : 'bg-gray-700'
+                        level <= strength ? strengthColors[strength] : 'bg-[#1b4965]/15'
                       }`}
                     />
                   ))}
                 </div>
-                <p className="mt-1 text-xs text-gray-500">{strengthLabels[strength]}</p>
+                <p className="mt-1 text-xs text-[#1b4965]/60">{strengthLabels[strength]}</p>
               </div>
             )}
           </div>
 
           <div>
-            <label htmlFor="confirmMaster" className="block text-sm font-medium text-gray-300">
+            <label htmlFor="confirmMaster" className="block text-sm font-medium text-[#1b4965]">
               Confirm Master Password
             </label>
             <input
@@ -163,28 +162,28 @@ export default function SetupPage() {
               required
               value={confirmMaster}
               onChange={(e) => setConfirmMaster(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="mt-1 block w-full rounded-sm border border-[#1b4965]/15 bg-white px-4 py-3 text-[#1b4965] placeholder-[#1b4965]/40 focus:border-[#5fa8a0] focus:outline-none focus:ring-1 focus:ring-[#5fa8a0]"
               placeholder="Re-enter master password"
             />
           </div>
 
           <div>
-            <label htmlFor="hint" className="block text-sm font-medium text-gray-300">
-              Password Hint <span className="text-gray-500">(optional)</span>
+            <label htmlFor="hint" className="block text-sm font-medium text-[#1b4965]">
+              Password Hint <span className="text-[#1b4965]/60">(optional)</span>
             </label>
             <input
               id="hint"
               type="text"
               value={hint}
               onChange={(e) => setHint(e.target.value)}
-              className="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              className="mt-1 block w-full rounded-sm border border-[#1b4965]/15 bg-white px-4 py-3 text-[#1b4965] placeholder-[#1b4965]/40 focus:border-[#5fa8a0] focus:outline-none focus:ring-1 focus:ring-[#5fa8a0]"
               placeholder="A hint to help you remember"
             />
-            <p className="mt-1 text-xs text-gray-500">This hint will be stored unencrypted. Do not include your password.</p>
+            <p className="mt-1 text-xs text-[#1b4965]/60">This hint will be stored unencrypted. Do not include your password.</p>
           </div>
 
-          <div className="rounded-lg border border-amber-800 bg-amber-900/20 px-4 py-3">
-            <p className="text-sm text-amber-300">
+          <div className="rounded-sm border border-[#d97706]/30 bg-[#d97706]/10 px-4 py-3">
+            <p className="text-sm text-[#d97706]">
               <strong>Important:</strong> We cannot recover your master password. There is no reset option.
               Store it somewhere safe outside of this app.
             </p>
@@ -193,7 +192,7 @@ export default function SetupPage() {
           <button
             type="submit"
             disabled={loading || strength < 3}
-            className="w-full rounded-lg bg-emerald-600 px-4 py-3 font-medium text-white transition-colors hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full rounded-sm bg-[#5fa8a0] px-4 py-3 font-medium text-white transition-colors hover:bg-[#4d8f87] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? 'Setting up vault...' : 'Create Vault'}
           </button>

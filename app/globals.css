@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Shorestack Brand Colors */
+  --deep-ocean: #1b4965;
+  --seafoam: #5fa8a0;
+  --sand: #fcfbf8;
+  --success: #16a34a;
+  --coral: #e76f51;
+  --warning: #d97706;
+
+  /* Semantic Colors */
+  --text-primary: var(--deep-ocean);
+  --text-secondary: rgba(27, 73, 101, 0.6);
+  --text-muted: rgba(27, 73, 101, 0.4);
+  --bg-primary: var(--sand);
+  --bg-secondary: #ffffff;
+  --border: rgba(27, 73, 101, 0.15);
+  --accent: var(--seafoam);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  border-color: rgba(27, 73, 101, 0.15);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  @apply scroll-smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-sand text-deep-ocean font-sans;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Tailwind theme overrides */
+@theme {
+  --color-deep-ocean: #1b4965;
+  --color-seafoam: #5fa8a0;
+  --color-sand: #fcfbf8;
+  --color-success: #16a34a;
+  --color-coral: #e76f51;
+  --color-warning: #d97706;
+}
+
+/* Custom components */
+.btn-primary {
+  @apply rounded-sm bg-seafoam px-4 py-2 font-medium text-white transition-colors hover:bg-[#4d8f87];
+}
+
+.btn-secondary {
+  @apply rounded-sm border border-deep-ocean bg-transparent px-4 py-2 font-medium text-deep-ocean transition-colors hover:bg-deep-ocean/5;
+}
+
+.btn-ghost {
+  @apply text-deep-ocean transition-colors hover:bg-deep-ocean/10;
+}
+
+.card {
+  @apply rounded-sm border border-deep-ocean/15 bg-white p-6;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-sans font-semibold text-deep-ocean;
+}
+
+a {
+  @apply text-seafoam transition-colors hover:text-[#4d8f87];
+}
+
+/* Form inputs */
+input,
+textarea,
+select {
+  @apply rounded-sm border border-deep-ocean/15 bg-sand px-3 py-2 text-deep-ocean placeholder-deep-ocean/40 transition-colors focus:border-seafoam focus:outline-none focus:ring-1 focus:ring-seafoam;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+/* Utilities */
+.border-thin {
+  @apply border border-deep-ocean/15;
+}
+
+.text-muted {
+  @apply text-deep-ocean/60;
+}
+
+.text-subtle {
+  @apply text-deep-ocean/40;
 }

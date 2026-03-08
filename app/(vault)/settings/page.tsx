@@ -189,73 +189,73 @@ function SettingsContent() {
     }
   }
 
-  const inputClass = 'block w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-sm';
+  const inputClass = 'block w-full rounded-sm border border-[#1b4965]/15 bg-white px-4 py-3 text-[#1b4965] placeholder-[#1b4965]/40 focus:border-[#5fa8a0] focus:outline-none focus:ring-1 focus:ring-[#5fa8a0] text-sm';
 
   if (loading) {
-    return <div className="flex min-h-screen items-center justify-center"><div className="animate-pulse text-gray-400">Loading settings...</div></div>;
+    return <div className="flex min-h-screen items-center justify-center bg-sand"><div className="animate-pulse text-[#1b4965]/60">Loading settings...</div></div>;
   }
 
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-gray-800 bg-gray-900/50 backdrop-blur">
+    <div className="min-h-screen bg-sand">
+      <header className="border-b border-[#1b4965]/15 bg-white/80 backdrop-blur">
         <div className="mx-auto flex max-w-3xl items-center gap-3 px-6 py-4">
-          <button onClick={() => router.push('/dashboard')} className="text-gray-400 hover:text-white">
+          <button onClick={() => router.push('/dashboard')} className="text-[#1b4965]/60 hover:text-[#1b4965]">
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
             </svg>
           </button>
-          <h1 className="text-lg font-semibold">Settings</h1>
+          <h1 className="text-lg font-semibold text-[#1b4965]">Settings</h1>
         </div>
       </header>
 
       <main className="mx-auto max-w-3xl px-6 py-8 space-y-8">
         {/* Upgrade Success Banner */}
         {showUpgradeSuccess && (
-          <div className="flex items-center justify-between rounded-xl border border-emerald-700 bg-emerald-900/30 px-5 py-4">
+          <div className="flex items-center justify-between rounded-sm border border-[#16a34a]/30 bg-[#16a34a]/10 px-5 py-4">
             <div className="flex items-center gap-3">
-              <svg className="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+              <svg className="h-5 w-5 text-[#16a34a]" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
               </svg>
-              <span className="text-sm font-medium text-emerald-300">Your plan has been upgraded! It may take a moment to reflect.</span>
+              <span className="text-sm font-medium text-[#16a34a]">Your plan has been upgraded! It may take a moment to reflect.</span>
             </div>
-            <button onClick={() => { setShowUpgradeSuccess(false); loadSettings(); }} className="text-sm text-emerald-400 hover:text-emerald-300">Refresh</button>
+            <button onClick={() => { setShowUpgradeSuccess(false); loadSettings(); }} className="text-sm text-[#16a34a] hover:text-[#16a34a]/80">Refresh</button>
           </div>
         )}
 
         {/* Account Info */}
-        <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-500">Account</h2>
+        <section className="rounded-sm border border-[#1b4965]/15 bg-white p-6">
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[#1b4965]">Account</h2>
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between"><span className="text-gray-400">Plan</span><span className="capitalize text-emerald-400">{profile?.plan || 'individual'}</span></div>
-            <div className="flex justify-between"><span className="text-gray-400">KDF Iterations</span><span className="font-mono">{profile?.kdf_iterations?.toLocaleString()}</span></div>
-            <div className="flex justify-between"><span className="text-gray-400">Password Hint</span><span className="text-gray-300">{profile?.hint || 'None set'}</span></div>
+            <div className="flex justify-between"><span className="text-[#1b4965]/60">Plan</span><span className="capitalize text-[#5fa8a0]">{profile?.plan || 'individual'}</span></div>
+            <div className="flex justify-between"><span className="text-[#1b4965]/60">KDF Iterations</span><span className="font-mono text-[#1b4965]">{profile?.kdf_iterations?.toLocaleString()}</span></div>
+            <div className="flex justify-between"><span className="text-[#1b4965]/60">Password Hint</span><span className="text-[#1b4965]">{profile?.hint || 'None set'}</span></div>
           </div>
         </section>
 
         {/* Subscription & Pricing */}
-        <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-500">Subscription</h2>
+        <section className="rounded-sm border border-[#1b4965]/15 bg-white p-6">
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[#1b4965]">Subscription</h2>
           <PricingCards currentPlan={profile?.plan || 'individual'} onManageBilling={handleManageBilling} />
         </section>
 
         {/* Change Master Password */}
-        <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+        <section className="rounded-sm border border-[#1b4965]/15 bg-white p-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-500">Master Password</h2>
-            <button onClick={() => setShowChangePw(!showChangePw)} className="text-sm text-emerald-400 hover:text-emerald-300">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-[#1b4965]">Master Password</h2>
+            <button onClick={() => setShowChangePw(!showChangePw)} className="text-sm text-[#5fa8a0] hover:text-[#4d8f87]">
               {showChangePw ? 'Cancel' : 'Change'}
             </button>
           </div>
           {showChangePw && (
             <form onSubmit={handleChangeMasterPassword} className="mt-4 space-y-3">
-              {changePwError && <div className="rounded-lg border border-red-800 bg-red-900/30 px-4 py-3 text-sm text-red-300">{changePwError}</div>}
+              {changePwError && <div className="rounded-sm border border-[#e76f51]/30 bg-[#e76f51]/10 px-4 py-3 text-sm text-[#e76f51]">{changePwError}</div>}
               <input type="password" value={currentPw} onChange={(e) => setCurrentPw(e.target.value)} className={inputClass} placeholder="Current master password" required />
               <input type="password" value={newPw} onChange={(e) => setNewPw(e.target.value)} className={inputClass} placeholder="New master password (min 10 chars)" required />
               <input type="password" value={confirmNewPw} onChange={(e) => setConfirmNewPw(e.target.value)} className={inputClass} placeholder="Confirm new master password" required />
-              <div className="rounded-lg border border-amber-800 bg-amber-900/20 px-4 py-3 text-sm text-amber-300">
+              <div className="rounded-sm border border-[#d97706]/30 bg-[#d97706]/10 px-4 py-3 text-sm text-[#d97706]">
                 This will re-encrypt all vault items with the new password. Do not close the browser during this process.
               </div>
-              <button type="submit" disabled={changePwLoading} className="rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50">
+              <button type="submit" disabled={changePwLoading} className="rounded-sm bg-[#5fa8a0] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#4d8f87] disabled:opacity-50">
                 {changePwLoading ? 'Re-encrypting vault...' : 'Change Master Password'}
               </button>
             </form>
@@ -263,34 +263,34 @@ function SettingsContent() {
         </section>
 
         {/* Export */}
-        <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-          <h2 className="mb-2 text-sm font-semibold uppercase tracking-wider text-gray-500">Export Vault</h2>
-          <p className="mb-4 text-sm text-gray-400">Download a decrypted JSON backup of all vault items. Keep this file secure.</p>
-          <button onClick={handleExportVault} disabled={exporting} className="rounded-lg border border-gray-700 px-4 py-2.5 text-sm font-medium text-gray-300 hover:bg-gray-800 disabled:opacity-50">
+        <section className="rounded-sm border border-[#1b4965]/15 bg-white p-6">
+          <h2 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#1b4965]">Export Vault</h2>
+          <p className="mb-4 text-sm text-[#1b4965]/60">Download a decrypted JSON backup of all vault items. Keep this file secure.</p>
+          <button onClick={handleExportVault} disabled={exporting} className="rounded-sm border border-[#1b4965]/15 px-4 py-2.5 text-sm font-medium text-[#1b4965]/70 hover:bg-[#1b4965]/5 disabled:opacity-50">
             {exporting ? 'Exporting...' : 'Export as JSON'}
           </button>
         </section>
 
         {/* Audit Log */}
-        <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-500">Recent Activity</h2>
+        <section className="rounded-sm border border-[#1b4965]/15 bg-white p-6">
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[#1b4965]">Recent Activity</h2>
           {auditLogs.length === 0 ? (
-            <p className="text-sm text-gray-500">No activity logged yet.</p>
+            <p className="text-sm text-[#1b4965]/60">No activity logged yet.</p>
           ) : (
             <div className="max-h-64 space-y-1 overflow-y-auto">
               {auditLogs.map((log) => (
                 <div key={log.id} className="flex items-center justify-between py-1.5 text-sm">
                   <span className={`rounded px-2 py-0.5 text-xs font-medium ${
-                    log.action === 'unlock' ? 'bg-blue-900/30 text-blue-300' :
-                    log.action === 'create' ? 'bg-green-900/30 text-green-300' :
-                    log.action === 'edit' ? 'bg-yellow-900/30 text-yellow-300' :
-                    log.action === 'delete' ? 'bg-red-900/30 text-red-300' :
-                    log.action === 'export' ? 'bg-purple-900/30 text-purple-300' :
-                    'bg-gray-800 text-gray-400'
+                    log.action === 'unlock' ? 'bg-[#3b82f6]/20 text-[#3b82f6]' :
+                    log.action === 'create' ? 'bg-[#16a34a]/20 text-[#16a34a]' :
+                    log.action === 'edit' ? 'bg-[#d97706]/20 text-[#d97706]' :
+                    log.action === 'delete' ? 'bg-[#e76f51]/20 text-[#e76f51]' :
+                    log.action === 'export' ? 'bg-[#8b5cf6]/20 text-[#8b5cf6]' :
+                    'bg-[#1b4965]/10 text-[#1b4965]/60'
                   }`}>
                     {log.action}
                   </span>
-                  <span className="text-xs text-gray-600">{new Date(log.created_at).toLocaleString()}</span>
+                  <span className="text-xs text-[#1b4965]/40">{new Date(log.created_at).toLocaleString()}</span>
                 </div>
               ))}
             </div>
@@ -298,22 +298,22 @@ function SettingsContent() {
         </section>
 
         {/* Danger Zone */}
-        <section className="rounded-xl border border-red-900/50 bg-red-950/20 p-6">
-          <h2 className="mb-2 text-sm font-semibold uppercase tracking-wider text-red-400">Danger Zone</h2>
-          <p className="mb-4 text-sm text-gray-400">Permanently delete your account and all vault data. This cannot be undone.</p>
+        <section className="rounded-sm border border-[#e76f51]/30 bg-[#e76f51]/10 p-6">
+          <h2 className="mb-2 text-sm font-semibold uppercase tracking-wider text-[#e76f51]">Danger Zone</h2>
+          <p className="mb-4 text-sm text-[#1b4965]/60">Permanently delete your account and all vault data. This cannot be undone.</p>
           {!showDelete ? (
-            <button onClick={() => setShowDelete(true)} className="rounded-lg border border-red-800 px-4 py-2.5 text-sm font-medium text-red-400 hover:bg-red-900/30">
+            <button onClick={() => setShowDelete(true)} className="rounded-sm border border-[#e76f51]/30 px-4 py-2.5 text-sm font-medium text-[#e76f51] hover:bg-[#e76f51]/10">
               Delete Account
             </button>
           ) : (
             <div className="space-y-3">
-              <p className="text-sm text-red-300">Type <strong>DELETE</strong> to confirm:</p>
-              <input type="text" value={deleteConfirm} onChange={(e) => setDeleteConfirm(e.target.value)} className={`${inputClass} border-red-800`} placeholder="DELETE" />
+              <p className="text-sm text-[#e76f51]">Type <strong>DELETE</strong> to confirm:</p>
+              <input type="text" value={deleteConfirm} onChange={(e) => setDeleteConfirm(e.target.value)} className={`${inputClass} border-[#e76f51]/30`} placeholder="DELETE" />
               <div className="flex gap-3">
-                <button onClick={handleDeleteAccount} disabled={deleteConfirm !== 'DELETE'} className="rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-red-700 disabled:opacity-50">
+                <button onClick={handleDeleteAccount} disabled={deleteConfirm !== 'DELETE'} className="rounded-sm bg-[#e76f51] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#d65a3e] disabled:opacity-50">
                   Permanently Delete
                 </button>
-                <button onClick={() => { setShowDelete(false); setDeleteConfirm(''); }} className="rounded-lg border border-gray-700 px-4 py-2.5 text-sm text-gray-300 hover:bg-gray-800">
+                <button onClick={() => { setShowDelete(false); setDeleteConfirm(''); }} className="rounded-sm border border-[#1b4965]/15 px-4 py-2.5 text-sm text-[#1b4965]/70 hover:bg-[#1b4965]/5">
                   Cancel
                 </button>
               </div>
