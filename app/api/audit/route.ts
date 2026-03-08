@@ -56,8 +56,8 @@ export async function GET() {
       .eq('id', user.id)
       .single();
 
-    if (!profile || profile.plan === 'free') {
-      return NextResponse.json({ error: 'Audit log requires Pro plan' }, { status: 403 });
+    if (!profile) {
+      return NextResponse.json({ error: 'Profile not found' }, { status: 404 });
     }
 
     const { data: logs, error } = await supabase

@@ -1,13 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { createClient } from '@/lib/supabase';
 import { deriveVaultKey, encryptItem, decryptItem } from '@/lib/crypto';
 import { VaultSession } from '@/lib/vault-session';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import PricingCards from '@/components/vault/PricingCards';
 import type { Profile, VaultItemRow, AuditLogRow } from '@/types/vault';
 
 export default function SettingsPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center"><div className="animate-pulse text-gray-400">Loading settings...</div></div>}>
+      <SettingsContent />
+    </Suspense>
+  );
+}
+
+function SettingsContent() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [auditLogs, setAuditLogs] = useState<AuditLogRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -27,11 +36,20 @@ export default function SettingsPage() {
   const [showDelete, setShowDelete] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState('');
 
+  // Upgrade success
+  const [showUpgradeSuccess, setShowUpgradeSuccess] = useState(false);
+
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
 
   useEffect(() => {
     loadSettings();
+    if (searchParams.get('upgraded') === 'true') {
+      setShowUpgradeSuccess(true);
+      // Remove query param from URL without reload
+      window.history.replaceState({}, '', '/settings');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -157,6 +175,20 @@ export default function SettingsPage() {
     router.push('/login');
   }
 
+  async function handleManageBilling() {
+    try {
+      const res = await fetch('/api/stripe/portal', { method: 'POST' });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || 'Failed to open billing portal');
+      }
+    } catch {
+      alert('Failed to open billing portal');
+    }
+  }
+
   const inputClass = 'block w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-sm';
 
   if (loading) {
@@ -177,14 +209,33 @@ export default function SettingsPage() {
       </header>
 
       <main className="mx-auto max-w-3xl px-6 py-8 space-y-8">
+        {/* Upgrade Success Banner */}
+        {showUpgradeSuccess && (
+          <div className="flex items-center justify-between rounded-xl border border-emerald-700 bg-emerald-900/30 px-5 py-4">
+            <div className="flex items-center gap-3">
+              <svg className="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+              </svg>
+              <span className="text-sm font-medium text-emerald-300">Your plan has been upgraded! It may take a moment to reflect.</span>
+            </div>
+            <button onClick={() => { setShowUpgradeSuccess(false); loadSettings(); }} className="text-sm text-emerald-400 hover:text-emerald-300">Refresh</button>
+          </div>
+        )}
+
         {/* Account Info */}
         <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
           <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-500">Account</h2>
           <div className="space-y-3 text-sm">
-            <div className="flex justify-between"><span className="text-gray-400">Plan</span><span className="capitalize text-emerald-400">{profile?.plan || 'free'}</span></div>
+            <div className="flex justify-between"><span className="text-gray-400">Plan</span><span className="capitalize text-emerald-400">{profile?.plan || 'individual'}</span></div>
             <div className="flex justify-between"><span className="text-gray-400">KDF Iterations</span><span className="font-mono">{profile?.kdf_iterations?.toLocaleString()}</span></div>
             <div className="flex justify-between"><span className="text-gray-400">Password Hint</span><span className="text-gray-300">{profile?.hint || 'None set'}</span></div>
           </div>
+        </section>
+
+        {/* Subscription & Pricing */}
+        <section className="rounded-xl border border-gray-800 bg-gray-900 p-6">
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-500">Subscription</h2>
+          <PricingCards currentPlan={profile?.plan || 'individual'} onManageBilling={handleManageBilling} />
         </section>
 
         {/* Change Master Password */}
