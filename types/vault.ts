@@ -6,7 +6,7 @@ export type VaultItemType = 'login' | 'secure_note' | 'credit_card' | 'identity'
 
 export type PlanType = 'personal' | 'plus';
 
-export type AuditAction = 'unlock' | 'view' | 'create' | 'edit' | 'delete' | 'export';
+export type AuditAction = 'unlock' | 'view' | 'create' | 'edit' | 'delete' | 'export' | 'biometric_enrolled' | 'biometric_removed';
 
 // --- Database Row Types ---
 
@@ -19,6 +19,11 @@ export interface Profile {
   vault_verifier_iv: string | null;
   plan: PlanType;
   stripe_customer_id: string | null;
+  webauthn_credential_id: string | null;
+  webauthn_public_key: string | null;
+  webauthn_transports: string[] | null;
+  biometric_vault_key_encrypted: string | null;
+  biometric_vault_key_iv: string | null;
   created_at: string;
 }
 

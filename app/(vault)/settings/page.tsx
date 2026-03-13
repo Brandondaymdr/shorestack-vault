@@ -6,6 +6,7 @@ import { deriveVaultKey, encryptItem, decryptItem, createVaultVerifier } from '@
 import { VaultSession } from '@/lib/vault-session';
 import { useRouter, useSearchParams } from 'next/navigation';
 import PricingCards from '@/components/vault/PricingCards';
+import BiometricEnroll from '@/components/vault/BiometricEnroll';
 import type { Profile, VaultItemRow, AuditLogRow } from '@/types/vault';
 
 export default function SettingsPage() {
@@ -270,6 +271,9 @@ function SettingsContent() {
             </form>
           )}
         </section>
+
+        {/* Biometric Unlock */}
+        {profile && <BiometricEnroll profile={profile} />}
 
         {/* Export */}
         <section className="rounded-sm border border-[#1b4965]/15 bg-white p-6">
