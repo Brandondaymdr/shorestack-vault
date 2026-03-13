@@ -41,6 +41,13 @@ Read these files first to understand the project:
 - **Chrome Web Store / Firefox Add-ons publishing** — Privacy policy, store listings
 - **Emergency access** — Trusted contact can request vault access after waiting period
 - **TOTP / 2FA codes** — Store and auto-fill authenticator codes
+- **Passkey support** — Store and use passkeys (WebAuthn discoverable credentials)
+- **Breach monitoring** — Check saved passwords against Have I Been Pwned API
+- **Auto-fill improvements** — Credit card autofill on checkout pages, identity form fill
+- **Folder / tag organization** — Group vault items into folders or tags
+- **Multi-device sync indicator** — Show last-synced timestamp, conflict resolution UI
+- **Accessibility audit** — WCAG 2.1 AA compliance, screen reader testing
+- **Performance optimization** — Lighthouse audit, bundle analysis, lazy loading
 
 ### Key files to read before coding
 - `CLAUDE.md` — Complete project docs including all architecture
